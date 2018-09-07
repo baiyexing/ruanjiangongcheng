@@ -1,8 +1,10 @@
-int main()
-{
-                     
+         
 
-    for(int i = 1; i < 10; i++)
-    printf("dfadadas");
-    return 0;
 }
+sdfhsdhk
+jhsdfgjh//fdsf
+sdfhj/*fds
+//asgdg
+/*hjk
+}//jhasdkjh
+}/*jdhfsd
