@@ -22,11 +22,11 @@ else :
                     row = len(gr)
                     for line in gr:
                         i=0
-                        zs = line.split('\\')
-                        zs1 = line.split('\*')
+                        zs = line.split('//')
+                        zs1 = line.split('/*')
                         if line.strip() == ''or len(line.strip()) == 1:
                             blank_row += 1
-                        elif  len(zs[0]) <= 1 and zs[0] == '"'or len(zs1[0]) <= 1 and zs1 [0] != ' " ' :
+                        elif  len(zs[0]) <= 1 and zs[0] != '"'or len(zs1[0]) <= 1 and zs1 [0] != ' " ' :
                             comment_row += 1
                         else:
                             code_row += 1
@@ -81,7 +81,7 @@ try :
                     if func2 == "-l" :
                         print("\n文件名：",n,"\n总行数为：" , res1[0])
                     if func2 == "-w":
-                        print("\n文件名：",n,"\n单词数为:" ,res1[5],"\n中文字数为：")
+                        print("\n文件名：",n,"\n单词数为:" ,res1[5],"\n中文字数为：",res1[6])
                     if func2 == "-a" :
                         print("\n文件名：",n,"\n空行数为：" , res1[1],"\n代码行为：" , res1[2],"\n注释行为：",res1[3])
     if func !="-s"and func !="-c"and func !="-w"and func !="-l"and func !="-a":
