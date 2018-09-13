@@ -69,6 +69,8 @@ try :
         print("单词数为：" ,res[5])
         print ("中文字数为：",res[6])
     if func == "-s" :
+        if func2 !="-w" and func2 !="-l" and func2 !="-a" and func2 !="-c" :
+            print ("输入参数错误")
         filelist = os.listdir(os.getcwd())
         for n in filelist :
             if os.path.isfile(n):
@@ -82,7 +84,7 @@ try :
                         print("\n文件名：",n,"\n单词数为:" ,res1[5],"\n中文字数为：")
                     if func2 == "-a" :
                         print("\n文件名：",n,"\n空行数为：" , res1[1],"\n代码行为：" , res1[2],"\n注释行为：",res1[3])
-    else :
+    if func !="-s"and func !="-c"and func !="-w"and func !="-l"and func !="-a":
         print("输入参数错误")
 except BaseException :
     exit(1)
