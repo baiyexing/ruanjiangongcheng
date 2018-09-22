@@ -74,7 +74,7 @@ try :
         filelist = os.listdir(os.getcwd())
         for n in filelist :
             if os.path.isfile(n):
-                if os.path.splitext(n)[1] == os.path.splitext(sys.argv[3])[1]:
+                if os.path.splitext(n)[1] == os.path.splitext(sysif.argv[3])[1]:
                     res1 = readfile(n)
                     if func2 == "-c" :
                         print( "\n文件名：",n,"\n字符数为：" ,res1[4])
