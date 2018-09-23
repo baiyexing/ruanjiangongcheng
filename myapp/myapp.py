@@ -1,16 +1,16 @@
 import random
 import  math
-
+import sys
 
 
 class Question:
     expression_array = []#表达式列表
-    expression = " "#表达式表示
-    answer = 0         #答案
-    answer_char = " "  #答案表示
-    number_range = 10  #操作数范围
-    probability = 0.5 #分数出现的概率
-    count = 4
+    expression = " "     #表达式表示
+    answer = 0           #答案
+    answer_char = " "    #答案表示
+    number_range = 10    #操作数范围
+    probability = 0.5    #分数出现的概率
+    count = 4            #操作数的多少
     def __init__(self,number_range,count,probability):
 
         self.number_range = number_range
@@ -18,12 +18,11 @@ class Question:
         self.probability = probability
 
         result = self.expression2(self.count)
-        print(result)
+        #print(result)
         self.expression_array = result['expression_array']
         self.expression = result['expression']
         self.answer = result['answer']
         self.answer_char = str(self.fraction_char(result['answer']))
-        print(self.answer_char)
 
     def fraction_char(self,figure_array):#获得分数的表示形式
         figure1 = figure_array[0]
@@ -132,7 +131,6 @@ class Question:
 
             operate = self.getrandom(4)
 
-
             if operate == 4 and right['answer'][0] == 0:
                  t = left
                  left = right
@@ -170,7 +168,7 @@ class Question:
                         left['expression'] = '(' + left['expression'] + ')'
                     if type(right['expression_array']) == list and right['expression_array'][1] in[1,2]:
                         right['expression'] = '(' + right['expression'] + ')'
-            expression = left['expression']+self.operator_char(operate)+right['expression']
+            expression = left['expression']+' '+self.operator_char(operate)+' '+right['expression']
             return {
                 'expression_array':  expression_array,
                 'expression':        expression,
@@ -179,11 +177,78 @@ class Question:
 
 
 
+class Parameter :
+    number_range = 10    #操作数范围
+    probability = 0.5    #分数出现的概率
+    expression_count = 10#算式数目
+    expressionlist = []  #算式列表
+    count = 4            #操作数的多少
 
-n = 10
-while n != 0:
-    print(n)
-    app = Question(10,3,0)
-    n -= 1
+
+    def __init__(self,argv):
+        self.get_parameter(argv)
+        self.expressionlist = self.getexpression_list(self.expression_count,self.number_range,self.count,self.probability)
+        self.write_file(self.expressionlist)
+    def get_parameter(self,argv):
+        i = 0
+        while i <  len(argv) :
+            if argv[i] == '-n':
+                i += 1
+                try:
+                    self.expression_count = int(argv[i])
+                except Exception as err:
+                    return  False
+            elif argv[i] == '-r':
+                i += 1
+                try:
+                    self.number_range = int(argv[i])
+                except Exception as err:
+                    return False
+            i += 1
+        return
+
+    def getexpression_list(self, expression_count, number_range, count, probability) :
+        List = []
+        i = 0
+        while i < expression_count:
+            expression = Question(number_range,count,probability)
+            while self.check(expression,List):
+                expression = Question(number_range,count,probability)
+            List.append({
+                'expression_array': expression.__dict__['expression_array'],
+                'expression':       expression.__dict__['expression'],
+                'answer':           expression.__dict__['answer'],
+                'answer_char':      expression.__dict__['answer_char']
+
+            })
+            i += 1
+        return List
+
+    def check(self,expression,List):
+        expressionarray = expression.__dict__['expression_array']
+        for i in List:
+            if expressionarray == i['expression_array']:
+                return True
+        return False
+    def write_file(self,expressionlist):
+        i = 0
+        f = open("Exercises.txt","w")
+        g = open("Grade.txt","w")
+        while i < len(expressionlist):
+            f.write(str((i + 1)) + '. ' + expressionlist[i]['expression'] + ' =\n')
+            g.write(str((i+1)) + '. ' + expressionlist[i]['answer_char'] + ' =\n')
+            i += 1
+        f.close()
+        g.close()
+
+
+# n = 10
+# while n != 0:
+#     print(n)
+#app = Question(10,3,0)
+add = Parameter(sys.argv)
+
+
+    # n -= 1
 
 
